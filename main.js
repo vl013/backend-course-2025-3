@@ -1,4 +1,4 @@
-// main.js
+
 const fs = require('fs');
 const path = require('path');
 const { Command } = require('commander');
@@ -14,7 +14,7 @@ program
 program.parse(process.argv);
 const opts = program.opts();
 
-// Required input file check (exact error text as in lab)
+
 if (!opts.input) {
   console.error('Please, specify input file');
   process.exit(1);
@@ -26,7 +26,7 @@ if (!fs.existsSync(inputPath)) {
   process.exit(1);
 }
 
-// Helper: find first array inside parsed JSON (top-level array or first property that is an array)
+
 function findArrayIn(obj) {
   if (Array.isArray(obj)) return obj;
   if (obj && typeof obj === 'object') {
@@ -37,7 +37,7 @@ function findArrayIn(obj) {
   return [];
 }
 
-// Helper: get property by possible names (case-insensitive)
+
 function getProp(obj, candidates) {
   if (!obj || typeof obj !== 'object') return undefined;
   const keys = Object.keys(obj);
@@ -50,7 +50,7 @@ function getProp(obj, candidates) {
   return undefined;
 }
 
-// Helper: parse numeric value from possible price/area strings
+
 function toNumber(val) {
   if (val == null) return NaN;
   if (typeof val === 'number') return val;
@@ -63,13 +63,13 @@ try {
   const parsed = JSON.parse(content);
   const records = findArrayIn(parsed);
 
-  // If no array found, try to coerce object keys into single-record array
+
   const items = records.length ? records : (Array.isArray(parsed) ? parsed : [parsed]);
 
   const outLines = [];
 
   for (const it of items) {
-    // find price and area fields with tolerant names
+
     const priceVal = getProp(it, ['price', 'Price', 'PRICE']);
     const areaVal = getProp(it, ['area', 'Area', 'size', 'sqft', 'square', 'area_m2', 'area_total']);
     const furnishingVal = getProp(it, ['furnishingstatus', 'furnishing_status', 'furnished', 'FurnishingStatus']);
@@ -88,15 +88,15 @@ try {
       if (isNaN(numericPrice) || numericPrice >= opts.price) continue;
     }
 
-    // Prepare strings for output (use raw numeric or empty)
+ 
     const priceOut = isNaN(toNumber(priceVal)) ? '' : String(toNumber(priceVal));
     const areaOut = isNaN(toNumber(areaVal)) ? '' : String(toNumber(areaVal));
 
-    // Format: "<price> <area>"
+
     outLines.push(`${priceOut} ${areaOut}`.trim());
   }
 
-  // If neither output nor display requested -> do nothing (lab requires silence)
+
   if (!opts.output && !opts.display) {
     // nothing to do
     process.exit(0);
@@ -112,7 +112,7 @@ try {
   }
 
 } catch (err) {
-  // If reading/parsing failed and file existed, show useful message
+
   if (err.code === 'ENOENT') {
     console.error('Cannot find input file');
   } else if (err.name === 'SyntaxError') {
