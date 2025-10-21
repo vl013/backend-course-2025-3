@@ -11,5 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^14.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vl013/backend-course-2025-3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vl013/backend-course-2025-3/issues"
+  },
+  "homepage": "https://github.com/vl013/backend-course-2025-3#readme"
 }
